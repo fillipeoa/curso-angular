@@ -5,8 +5,8 @@ export class InMemoryDatabase implements InMemoryDbService{
     createDb(){
         const categories = [
             { id:1, name:"Lazer", description:"" },
-
+            { id:2, name:"Energia", description:"" },
         ];
-        return categories;
+        return { categories }
     }
 }

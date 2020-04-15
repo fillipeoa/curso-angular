@@ -10,7 +10,7 @@ import { Category } from "./category.model";
   providedIn: 'root'
 })
 export class CategoryService {
-  private apiPath: string = "api/categories"
+  private apiPath: string = "api/categories";
 
   constructor(private http: HttpClient) { }
 
@@ -61,7 +61,7 @@ export class CategoryService {
   private jsonDataToCategories(jsonData: any[]): Category[]{
     const categories: Category[] = [];
     jsonData.forEach(element => categories.push(element as Category));
-    return categories;
+    return (categories);
   }
 
   private jsonDataToCategory(jsonData: any): Category{
