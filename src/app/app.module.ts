@@ -13,7 +13,8 @@ import { InMemoryDatabase } from "./in-memory-database";
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryDatabase)
   ],
   providers: [],
   bootstrap: [AppComponent]
