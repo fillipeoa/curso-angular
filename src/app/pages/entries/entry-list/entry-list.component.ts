@@ -9,6 +9,7 @@ import { EntryService } from "../shared/entry.service";
   templateUrl: './entry-list.component.html',
   styleUrls: ['./entry-list.component.css']
 })
+
 export class EntryListComponent implements OnInit {
 
   entries: Entry[] = [];
