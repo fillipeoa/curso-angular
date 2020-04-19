@@ -9,7 +9,6 @@ import { Entry } from "./entry.model";
 @Injectable({
   providedIn: 'root'
 })
-
 export class EntryService {
   private apiPath: string = "api/entries";
 
@@ -57,16 +56,14 @@ export class EntryService {
 
 
 
-  //PRIVATE METHODS
-  
-  private jsonDataToEntries(jsonData: any[]): Entry[]{    
-    const entries: Entry[] = [];
 
+  
+  private jsonDataToEntries(jsonData: any[]): Entry[]{
+    const entries: Entry[] = [];
     jsonData.forEach(element => {
       const entry = Object.assign(new Entry(), element);
-      entries.push(entry);
+      entries.push(entry);  
     });
-
     return (entries);
   }
 
