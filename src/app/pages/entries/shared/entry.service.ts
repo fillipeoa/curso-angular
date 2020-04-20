@@ -13,7 +13,7 @@ import { map, catchError, flatMap } from "rxjs/operators";
 export class EntryService extends BaseResourceService<Entry> {
 
   constructor(protected injector: Injector, private categoryService: CategoryService) { 
-    super("api/entraies", injector, Entry.fromJson)
+    super("api/entries", injector, Entry.fromJson)
   }
 
   create(entry: Entry): Observable<Entry>{
