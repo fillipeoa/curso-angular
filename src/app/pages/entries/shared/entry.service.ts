@@ -4,32 +4,51 @@ import { BaseResourceService } from 'src/app/shared/services/base-resource.servi
 import { CategoryService } from '../../categories/shared/category.service';
 import { Entry } from "./entry.model";
 
-import { Observable, throwError } from "rxjs";
-import { map, catchError, flatMap } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { map, flatMap } from "rxjs/operators";
+
+import * as moment from "moment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EntryService extends BaseResourceService<Entry> {
 
-  constructor(protected injector: Injector, private categoryService: CategoryService) { 
+  constructor(protected injector: Injector, private categoryService: CategoryService) {
     super("api/entries", injector, Entry.fromJson)
   }
 
-  create(entry: Entry): Observable<Entry>{
-    return(this.setCategoryAndSendToServer(entry, super.create.bind(this)))
+  create(entry: Entry): Observable<Entry> {
+    return (this.setCategoryAndSendToServer(entry, super.create.bind(this)))
   }
-//.BIND(THIS) É IMPORTANTE
-  update(entry: Entry): Observable<Entry>{
+  //.BIND(THIS) É IMPORTANTE
+  update(entry: Entry): Observable<Entry> {
     return this.setCategoryAndSendToServer(entry, super.update.bind(this))
   }
 
-  private setCategoryAndSendToServer(entry: Entry, sendFn: any): Observable<any>{
-     return this.categoryService.getById(entry.categoryId).pipe(
+  getByMonthAndYear(month: number, year: number): Observable<Entry[]> {
+    return this.getAll().pipe(
+      map(entries => this.filterByMonthAndYear(entries, month, year))
+    )
+  }
+
+  private setCategoryAndSendToServer(entry: Entry, sendFn: any): Observable<any> {
+    return this.categoryService.getById(entry.categoryId).pipe(
       flatMap(category => {
         entry.category = category;
         return sendFn(entry);
       })
     )
+  }
+
+  private filterByMonthAndYear(entries: Entry[], month: number, year: number) {
+    return entries.filter(entry => {
+      const entryDate = moment(entry.date, "DD/MM/YYYY");
+      const monthMatches = entryDate.month()+1 == month;
+      const yearMatches = entryDate.year() == year;
+      if (monthMatches && yearMatches){
+        return entry
+      }
+    })
   }
 }
